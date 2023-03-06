@@ -23,7 +23,7 @@ The material is available as a set of Jupyter notebooks.
 From the command line, use
 
 ```
-git clone https://github.com/Yannael/BigDataAnalytics_INFOH515
+git clone https://github.com/TheoVerhelst/Big-Data-Analytics-INFOH515-202223
 ```
 
 If using the course cluster, you will have to use SFTP to send this folder to the cluster.
@@ -81,7 +81,7 @@ and open in the browser at `127.0.0.1:8888`
 
 In order to ease the setting-up of the environment, we also prepared a [Docker](https://www.docker.com/) container that provides a ready-to-use environment. See `docker` folder for installing Docker, downloading the course container, and get started with it.
 
-Note that the [Dockerfile](https://github.com/jdestefani/BigDataAnalytics_INFOH515/blob/master/Docker/Dockerfile) script essentially follows the steps for the 'local' installation.
+Note that the [Dockerfile](https://github.com/TheoVerhelst/Big-Data-Analytics-INFOH515-202223/blob/main/Docker/Dockerfile) script essentially follows the steps for the 'local' installation.
 
 ## Check if your setup is working
 
