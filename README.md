@@ -1,11 +1,11 @@
-# [INFO-H515 - Big Data Scalable Analytics](https://uv.ulb.ac.be/course/view.php?id=85246)
-
-#### *Théo Verhelst, Daniele Lunghi and Gianluca Bontempi* - [Machine Learning Group](http://mlg.ulb.ac.be)
+# INFO-H515 - Big Data Scalable Analytics
+#### [Link to the Virtual University](https://uv.ulb.ac.be/course/view.php?id=106385)
+#### *Théo Verhelst, Cedric Simar and Gianluca Bontempi* - [Machine Learning Group](http://mlg.ulb.ac.be)
 #### *Material from Yann-Aël Leborgne, Jacopo De Stefani and Gianluca Bontempi*
 
 # Exercise classes - Overview
 
-This repository contains the material for the exercise classes of the ULB/VUB Big Data Analytics master course (second semester 2021-2022) - Advanced analytics part.
+This repository contains the material for the exercise classes of the ULB/VUB Big Data Analytics master course (second semester 2022-2023) - Advanced analytics part.
 
 These hands-on sessions provide:
 
