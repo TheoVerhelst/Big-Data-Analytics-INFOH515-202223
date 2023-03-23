@@ -1,24 +1,20 @@
 # [INFO-H515 - Big Data Scalable Analytics](https://uv.ulb.ac.be/course/view.php?id=85246)
-# Docker container for the course and for Big Data Geospatial Analysis in Kafka & Spark Streaming (PySpark)
+# Docker container for Big Data Analytics with Spark (PySpark)
 
-## Developed by Giovanni Buroni (Dockerfile), Jacopo De Stefani (Windows fixes) 
+This Dockerfile sets up a complete streaming environment on Ubuntu 22.04 for experimenting with Spark streaming (PySpark). It installs
 
-This Dockerfile sets up a complete streaming environment on Ubuntu 20.04 for experimenting with Kafka and Spark streaming (PySpark). It installs
-
-* Kafka 3.0.0
-* Spark 3.2.0 
+* Spark 3.3.2
 
 It additionnally installs
 
 * Anaconda distribution for Python 3.9;
-* Jupyter notebook for Python; 
-* Geopandas python package for geospatial data (http://geopandas.org/index.html).
+* Jupyter notebook for Python;
 
 ## 0. Docker installation
 
-Docker is a software container platform, which allows to isolate OS environments. Its main benefits over virtual machines are a reduced footprint (starting from 60MB for a Linux distribution - for example [ubuntu](https://hub.docker.com/_/ubuntu/)), and an easy way reconfigure an OS environment. Note: The Docker container for this course is 7.7GB, mostly due to the Anaconda (>1GB) and Spark (>1GB) distributions.
+Docker is a software container platform, which allows to isolate OS environments. Its main benefits over virtual machines are a reduced footprint (starting from 60MB for a Linux distribution - for example [ubuntu](https://hub.docker.com/_/ubuntu/)), and an easy way reconfigure an OS environment. Note: The Docker container for this course is 6.2GB, mostly due to the Anaconda (around 4GB) distribution.
 
-For more information on Docker, see: 
+For more information on Docker, see:
 
 * https://www.docker.com/what-docker
 * https://en.wikipedia.org/wiki/Docker_(software)
@@ -55,22 +51,22 @@ In order to avoid building the image from scratch, a prebuilt image is made avai
 
 The image is called ```ulb_infoh515``` and is available from DockerHub (Note: image is 7.7GB, make sure you have a reasonably good Internet conection).
 
-To install the image, use the standard ```docker pull``` command 
+To install the image, use the standard ```docker pull``` command
 
 ```
-docker pull jdestefani/ulb_infoh515
+docker pull yannael/ulb_infoh515
 ```
 
 Git clone the repository for the course
 
 ```
-git clone https://github.com/jdestefani/BigDataAnalytics_INFOH515
+git clone https://github.com/TheoVerhelst/Big-Data-Analytics-INFOH515-202223
 ```
 
-Cd to the `BigDataAnalytics_INFOH515` folder
+Cd to the `Big-Data-Analytics-INFOH515-202223` folder
 
 ```
-cd BigDataAnalytics_INFOH515
+cd Big-Data-Analytics-INFOH515-202223
 ```
 
 Finally, give recursive permission to all for writing to it (ease the sharing with Docker container)
@@ -79,7 +75,7 @@ Finally, give recursive permission to all for writing to it (ease the sharing wi
 chmod -R a+rwx .
 ```
 
-The Docker container should now be able to read/write to your **host ```BigDataAnalytics_INFOH515``` folder**.
+The Docker container should now be able to read/write to your **host ```Big-Data-Analytics-INFOH515``` folder**.
 
 ### 1.2. Start container
 
@@ -87,29 +83,29 @@ The Docker container should now be able to read/write to your **host ```BigDataA
 
 #### Linux / Mac
 
-From the ```BigDataAnalytics_INFOH515``` folder, start the container with
+From the ```Big-Data-Analytics-INFOH515-202223``` folder, start the container with
 
 ```
-docker run -v `pwd`:/home/guest/shared -p 8888:8888 -p 4040:4040 -p 23:22 -it jdestefani/ulb_infoh515 bash
+docker run -v `pwd`:/home/guest/shared -p 8888:8888 -p 4040:4040 -p 23:22 -it yannael/ulb_infoh515 bash
 
 ```
 
-#### Windows 
+#### Windows
 
 For Windows, the launching procedure is as follows:
 
 1. Start Docker Toolbox Quickstart Terminal and wait until the startup process is completed.
 2. Open a Windows Powershell terminal
-3. Run the following command in a PowerShell terminal, **from the `BigDataAnalytics_INFOH515` folder**:
+3. Run the following command in a PowerShell terminal, **from the `Big-Data-Analytics-INFOH515` folder**:
 
 ```
-$nixPath = (($pwd.Path -replace "\\","/") -replace ":","").Trim("/"); $nixPath = "/"+$nixPath.substring(0,1).toLower()+$nixPath.substring(1); docker run -v ${nixPath}:/home/guest/shared -p 8888:8888 -p 4040:4040 -p 23:22 -it jdestefani/ulb_infoh515 bash
+$nixPath = (($pwd.Path -replace "\\","/") -replace ":","").Trim("/"); $nixPath = "/"+$nixPath.substring(0,1).toLower()+$nixPath.substring(1); docker run -v ${nixPath}:/home/guest/shared -p 8888:8888 -p 4040:4040 -p 23:22 -it yannael/ulb_infoh515 bash
 
 ```
 
 **Notes:**
 
-* `-v` is used to share folder (right permissions given above will allow your changes to be saved on your computer). The "-v pwd:/home/guest/host" shares the local folder (i.e. folder containing Dockerfile, ipynb files, etc...) on your computer; 
+* `-v` is used to share folder (right permissions given above will allow your changes to be saved on your computer). The "-v pwd:/home/guest/host" shares the local folder (i.e. folder containing Dockerfile, ipynb files, etc...) on your computer;
 * `-it` starts the Docker container in interactive mode, so you can use the console and Bash;
 * `-p` is for sharing ports between the container and the host. 8888 is the notebook port, and 4040 the Spark UI port.
 
@@ -133,24 +129,8 @@ notebook
 
 and connect from your web browser of choice at port host:8888 (where 'host' is the IP for your host. If run locally on your computer, this should be 127.0.0.1 or 192.168.99.100, check Docker documentation).
 
-**N.B. - For Windows users:** Some users have reported problems connecting to the Docker using Internet Explorer and Edge, using Chrome or Firefox, should solve these issues. 
+**N.B. - For Windows users:** Some users have reported problems connecting to the Docker using Internet Explorer and Edge, using Chrome or Firefox, should solve these issues.
 
-
-### 1.2.3. Start Kafka and related services
-
-**N.B.** The usage of Kafka will be required for the project and the practical sessions on Streaming Analytics. It is not required to run this part if Kafka is not needed in the practical.
-
-Once run, you are logged in as root in the container. Run the startup_script.sh (in /usr/bin), with: 
-
-```
-kafka_startup_script.sh
-```
-
-to start:
-
-* SSH server. You can connect to the container using user 'guest' and password 'guest'
-* Zookeeper server
-* Kafka server
 
 
 ### 1.2.4. SSH connection
@@ -175,8 +155,8 @@ It is available in your browser at port 4040.
 The container is based on CentOS 6 Linux distribution. The main steps of the building process are
 
 * Install some common Linux tools (wget, unzip, tar, ssh tools, ...), and Java (1.8)
-* Create a guest user (UID important for sharing folders with host!, see below), and install Spark and sbt, Kafka, Anaconda and Jupyter notbooks for the guest user
-* Go back to root user, and install startup script (for starting SSH), sentenv.sh script to set up environment variables (JAVA, Kafka, Spark, ...)and spark-default.conf 
+* Create a guest user (UID important for sharing folders with host!, see below), and install Spark and sbt, Anaconda and Jupyter notbooks for the guest user
+* Go back to root user, and install startup script (for starting SSH), sentenv.sh script to set up environment variables (JAVA, Spark, ...)and spark-default.conf
 
 
 ### User UID
@@ -216,4 +196,3 @@ In case your machine has more than one hard disk two solutions exists:
 - Or, a manual mountpoint to the second hard drive must be created in the configuration of VirtualBox (the provisioner running the virtual machine containing Docker Engine) as described [here](https://stackoverflow.com/questions/48828406/unable-to-share-volume-with-docker-toolbox-on-windows-10).
 
 The same problem could appear if you are using [Docker on Windows](https://docs.docker.com/docker-for-windows/install/) (instead of the Docker Toolbox), a solution can be found [here](https://rominirani.com/docker-on-windows-mounting-host-directories-d96f3f056a2c).
-
